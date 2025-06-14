@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Trang Profile Người Dùng</title>
+  <link rel="stylesheet" href="/CSS/Profiles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Video nền -->
+  <video class="video-bg" autoplay muted loop>
+    <source src="/BG VIDEO/Car 4k wallpaper.mp4" type="video/mp4">
+    Trình duyệt của bạn không hỗ trợ video nền.
+  </video>
+
+  <!-- Profile Card -->
+  <div class="profile-wrapper">
+    <div class="profile-card">
+      <div class="avatar-box">
+        <img id="avatar" src="https://via.placeholder.com/150" alt="Avatar" />
+      </div>
+      <div class="profile-info">
+        <h2 id="fullname">Đang tải...</h2>
+        <p class="username">@<span id="username">Đang tải...</span></p>
+        <p class="email">📧 <span id="email">Đang tải...</span></p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const SUPABASE_URL = 'https://wxozonwykuutwkjxyxew.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4b3pvbnd5a3V1dHdranh5eGV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MzgwMjUsImV4cCI6MjA2NTMxNDAyNX0.9lZuachKdX2NmDLXAZsP3aMlhAL3ZAMepUXPKPCwt9Q';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Hàm tạo avatar ngẫu nhiên
+    function getRandomAvatar() {
+      const seed = Math.floor(Math.random() * 10000);
+      return `https://api.dicebear.com/7.x/thumbs/svg?seed=${seed}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        alert("Bạn chưa đăng nhập hoặc phiên đăng nhập hết hạn!");
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('fullname, email, username') // Bỏ avatar_url
+          .eq('uid', user.id)
+          .maybeSingle();
+
+        if (error) throw error;
+        if (!data) {
+          alert("Không tìm thấy thông tin người dùng.");
+          return;
+        }
+
+        document.getElementById('fullname').textContent = data.fullname ?? 'Không có tên';
+        document.getElementById('email').textContent = data.email ?? 'Không có email';
+        document.getElementById('username').textContent = data.username ?? 'Không có username';
+
+        // Đặt avatar ngẫu nhiên ban đầu
+        const avatarImg = document.getElementById('avatar');
+        avatarImg.src = getRandomAvatar();
+
+        // Cho phép click để đổi avatar ngẫu nhiên khác
+        avatarImg.style.cursor = 'pointer';
+        avatarImg.title = 'Bấm để đổi avatar';
+        avatarImg.addEventListener('click', () => {
+          avatarImg.src = getRandomAvatar();
+        });
+
+      } catch (error) {
+        alert("Không thể tải thông tin người dùng: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

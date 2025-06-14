@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Dealer - Toyota Motor Cars</title>
+       <link rel="stylesheet" href="/CSS/Sreachdealer.css" />
+</head>
+<body>
+       <script src="/JS/Sreachdealer.js" defer></script>
+    <div class="modal-overlay">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            
+            <h1 class="modal-title">FIND A DEALER</h1>
+            
+            <div class="brand-selector">
+                <button class="brand-option active" onclick="selectBrand('both')" id="both-btn">Both</button>
+                <button class="brand-option" onclick="selectBrand('toyota')" id="toyota-btn">Toyota</button>
+                <button class="brand-option" onclick="selectBrand('supra')" id="supra-btn">Supra</button>
+            </div>
+
+            <p class="modal-subtitle" id="subtitle">
+                Find authorized Toyota and Supra dealers in your area.<br>
+                Enter your location to discover nearby dealerships.
+            </p>
+
+            <form onsubmit="handleSearch(event)">
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        class="form-input" 
+                        placeholder="City"
+                        id="city"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        class="form-input" 
+                        placeholder="Country"
+                        id="country"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    SEARCH DEALERS
+                </button>
+
+                <button type="button" class="btn btn-secondary" onclick="useLocation()">
+                    USE MY LOCATION
+                    <span class="location-icon">📍</span>
+                </button>
+            </form>
+
+            <div class="results-section" id="results">
+                <div id="dealers-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text" id="loadingText">Searching for dealers...</div>
+        <div class="loading-subtext" id="loadingSubtext">Please wait while we find the best dealers in your area</div>
+        <div class="progress-dots">
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div>
+    </div>
+    
+</body>
+</html>

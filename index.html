@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đồ án thiết kế Web cơ bản</title>
+
+    <style>
+        /* Video nền */
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .popup {
+            position: fixed;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgb(230, 31, 31);
+            padding: 30px 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        .popup img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            max-width: 900px;
+            margin: 150px auto 50px;
+            background: rgba(245, 242, 242, 0.177);
+            /* nền trong mờ */
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            /* hiệu ứng mờ nền phía sau */
+            /* -webkit-backdrop-filter: blur(10px); */
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.026);
+            /* viền sáng mờ */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* viền mờ */
+
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        h2 {
+            color: #e83b3b;
+            margin-top: 5px;
+        }
+
+        .section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .section>div {
+            background: #626161c7;
+            padding: 20px;
+            border-radius: 12px;
+            flex: 1;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h3 {
+            margin-bottom: 15px;
+            color: #f1eaeaca;
+        }
+
+        .highlight {
+            color: #e52626;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            color: #f1e8e8c7;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            text-align: left;
+        }
+
+        .start-btn-container {
+            text-align: center;
+            margin: 50px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .start-btn {
+            background-color: #25211c;
+            color: rgb(199, 132, 132);
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .start-btn:hover {
+            background-color: #c4472f;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
+
+        .start-btn-container {
+            text-align: center;
+            margin-top: 80px;
+            margin-bottom: 40px;
+        }
+
+        .start-btn {
+            background-color: #b41313;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .start-btn:hover {
+            background-color: #cec8c7;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Video nền -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="/BG VIDEO/bg.mp4" type="video/mp4">
+        Trình duyệt của bạn không hỗ trợ video.
+    </video>
+
+    <!-- Popup thông báo -->
+    <div id="popup-notification" class="popup" style="display: none;">
+        <img src="2c2fd748-b438-4b91-bbd4-7f1a6c6cdfaf.png" alt="Logo HCE">
+        <h3>ỦY BAN NHÂN DÂN<br>SỞ GIÁO DỤC VÀ ĐÀO TẠO</h3>
+        <strong>TRƯỜNG CAO ĐẲNG KINH TẾ HCE</strong>
+    </div>
+
+    <!-- Nội dung chính -->
+    <div class="content">
+        <h1 style="color: #ddd9d9; text-transform: uppercase;">Supra Fast Car</h1>
+        <h2>ĐỒ ÁN THIẾT KẾ WEB CƠ BẢN</h2>
+
+        <div class="section">
+            <div>
+                <p style="color: #FFF;">ỦY BAN NHÂN DÂN TPHCM</p>
+                <p style="color: #FFF;">SỞ GIÁO DỤC VÀ ĐÀO TẠO</p>
+                <h3>TRƯỜNG CAO ĐẲNG KINH TÉ TPHCM</h3>
+                <img src="https://tools1s.com/images/dkmh/kthcm-logo.png" width="65" alt="">
+                <p class="highlight">Th.s PHẠM ĐĂNG PHƯƠNG</p>
+            </div>
+            <div>
+                <h3>SINH VIÊN THỰC HIỆN</h3>
+                <ul>
+                    <li>Đặng Quốc Cường</li>
+                    <li>Vũ Hoàng Long</li>
+                    <li>Quách Hùng Tân</li>
+                    <li>Nguyễn Thuận Bảo</li>
+                    <li>Nguyễn Quốc Đạt</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="start-btn-container">
+        <a href="index1.html">
+            <button class="start-btn">BẮT ĐẦU KHÁM PHÁ</button>
+        </a>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const popup = document.getElementById('popup-notification');
+            if (!localStorage.getItem('popupShown')) {
+                popup.style.display = 'block';
+                setTimeout(() => {
+                    popup.style.animation = 'fadeOut 1s forwards';
+                    localStorage.setItem('popupShown', 'true');
+                }, 5000);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

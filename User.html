@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tài khoản</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+  <h2>Thông tin tài khoản</h2>
+  <div id="userInfo">Đang tải...</div>
+  <button onclick="logout()">Đăng xuất</button>
+
+<script>
+  const { createClient } = supabase;
+  const supabaseClient = createClient(
+    'https://wxozonwykuutwkjxyxew.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4b3pvbnd5a3V1dHdranh5eGV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3MzgwMjUsImV4cCI6MjA2NTMxNDAyNX0.9lZuachKdX2NmDLXAZsP3aMlhAL3ZAMepUXPKPCwt9Q'
+  );
+
+  async function loadUser() {
+    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+    if (userError || !user) {
+      document.getElementById('userInfo').textContent = 'Bạn chưa đăng nhập.';
+      return;
+    }
+
+    const { data: profile, error: profileError } = await supabaseClient
+      .from('profiles')
+      .select('fullname, username')
+      .eq('uid', user.id)
+      .single();
+
+    if (profileError) {
+      console.error('Lỗi lấy profile:', profileError.message);
+    }
+
+    const fullName = profile?.fullname || '(Không có)';
+    const username = profile?.username || '(Không có)';
+    const email = user.email || '(Không có)';
+
+    document.getElementById('userInfo').innerHTML = `
+      <p><strong>Họ và tên:</strong> ${fullName}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Tên đăng nhập:</strong> ${username}</p>
+    `;
+  }
+
+  async function logout() {
+    await supabaseClient.auth.signOut();
+    localStorage.removeItem('user');
+    window.location.href = 'login.html';
+  }
+
+  loadUser();
+</script>
+
+</body>
+</html>
